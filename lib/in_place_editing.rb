@@ -17,8 +17,8 @@ module InPlaceEditing
     def in_place_edit_for(object, attribute, options = {})
       define_method("set_#{object}_#{attribute}") do
         @item = object.to_s.camelize.constantize.find(params[:id])
-        @item.update_attribute(attribute, params[:value])
-        render :text => @item.send(attribute).to_s
+        @item.update_attributes(attribute => params[:value])
+        render :text => @item.reload.send(attribute).to_s
       end
     end
   end
